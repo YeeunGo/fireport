@@ -39,8 +39,9 @@ dependencies {
 
 	/*webClient*/
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
+	implementation 'io.projectreactor.netty:reactor-netty-http'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
 }
 
 tasks.named('test') {
