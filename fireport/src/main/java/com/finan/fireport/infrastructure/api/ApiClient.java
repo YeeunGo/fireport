@@ -1,9 +1,9 @@
 package com.finan.fireport.infrastructure.api;
 
+import com.finan.fireport.exception.BadRequestException;
 import com.finan.fireport.exception.ErrorCode;
 import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,14 +25,14 @@ public class ApiClient {
 
     private final WebClient webClient;
 
-    @Value("${open-api.base-url}")
+    @Value("${open-api.base-url.http}")
     private String OPEN_API_BASE_URL;
 
     public ApiClient() {
         webClient = WebClient.builder().build();
     }
 
-//
+
 //    private ResponseSpec createGetRequest(String path) {
 //        if (StringUtil.isNullOrEmpty(path)) {
 //            throw new BadRequestException(ErrorCode.BAD_REQUEST, PATH_REQUIRED_MESSAGE);
@@ -48,7 +48,7 @@ public class ApiClient {
 //                    throw new BadRequestException(ErrorCode.BAD_REQUEST, SERVER_ERROR_MESSAGE);
 //                });
 //    }
-//
+
 //    public Boolean checkSettlementRegistered(SettlementCheckRequestDto settlementCheckRequestDto) {
 //        SettlementCheckResponseDto settlementResponse = createPostRequest(SETTLEMENT_PATH, settlementCheckRequestDto)
 //                .bodyToMono(settlementCheckResponseDto.class)
