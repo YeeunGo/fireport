@@ -1,20 +1,14 @@
 package com.finan.fireport.infrastructure.api;
 
-import com.finan.fireport.config.OpenApiProperties;
 import com.finan.fireport.exception.BadRequestException;
 import com.finan.fireport.exception.ErrorCode;
 import io.netty.util.internal.StringUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 
@@ -29,16 +23,12 @@ public class ApiClient {
     //private static final String SETTLEMENT_PATH = "/open-api/settlement/queries";
 
     private static final Integer BUFFER_MAX_SIZE = 10 * 1024 * 1024; // 10M
-
-    private final OpenApiProperties openApiProperties;
-
     private final WebClient webClient;
 
-    @Value("${open-api.base-url.http}")
+    @Value("${open-api.base-url}")
     private String OPEN_API_BASE_URL;
 
-    public ApiClient(OpenApiProperties openApiProperties) {
-        this.openApiProperties = openApiProperties;
+    public ApiClient() {
 
         // TIMEOUT : 10초로 제약
         HttpClient httpClient = HttpClient.create()
@@ -72,6 +62,5 @@ public class ApiClient {
 //                .block();
 //        return settlementResponse.registered();
 //    }
-
 
 }

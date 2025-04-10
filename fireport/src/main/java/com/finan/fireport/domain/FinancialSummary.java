@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/*요약재무제표 Entity*/
 @Entity
 @Table(name = "financial_summary")
 @Getter
@@ -13,7 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class FinancialSummary {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
