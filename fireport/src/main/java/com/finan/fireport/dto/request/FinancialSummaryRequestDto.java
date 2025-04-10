@@ -1,8 +1,9 @@
 package com.finan.fireport.dto.request;
 
-import com.finan.fireport.dto.request.BaseRequestDto;
 import lombok.Builder;
 import lombok.Getter;
+
+/*요약재무제표 requestDto*/
 
 @Getter
 @Builder

@@ -42,6 +42,8 @@ dependencies {
 	implementation 'io.projectreactor.netty:reactor-netty-http'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+	implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.1.0'
+
 }
 
 tasks.named('test') {

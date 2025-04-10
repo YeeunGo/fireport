@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
+/*주식 발행내역 조회 Entity*/
 @Entity
 @Table(name = "stock_issue_info")
 @Getter
