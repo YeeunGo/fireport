@@ -1,4 +1,4 @@
-package com.finan.fireport.dto;
+package com.finan.fireport.dto.request;
 
 public abstract class BaseRequestDto {
     private final Integer numOfRows;

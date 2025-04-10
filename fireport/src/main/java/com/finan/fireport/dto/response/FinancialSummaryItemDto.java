@@ -1,4 +1,4 @@
-package com.finan.fireport.dto;
+package com.finan.fireport.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

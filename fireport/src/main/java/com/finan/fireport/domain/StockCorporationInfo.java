@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-
+/* 상장종목정보 Entity*/
 @Entity
 @Table(name = "stock_corporation_info")
 @Getter
