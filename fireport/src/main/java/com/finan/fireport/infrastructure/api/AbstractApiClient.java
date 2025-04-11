@@ -42,7 +42,7 @@ public abstract class AbstractApiClient {
                 .build();
     }
 
-    private ResponseSpec createGetRequest(String path, String param) {
+    protected ResponseSpec createGetRequest(String path, String param) {
 
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
 
