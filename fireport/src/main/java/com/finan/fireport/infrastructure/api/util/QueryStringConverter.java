@@ -9,7 +9,6 @@ import java.util.Map;
 public class QueryStringConverter {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static <T> String convertDtoToParam(T dto){
-        ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> paramMap = objectMapper.convertValue(dto, new TypeReference<>() {});
 
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
@@ -19,7 +18,7 @@ public class QueryStringConverter {
             }
         });
 
-        return builder.toUriString();
+        return builder.encode().toUriString();
 
     }
 }
