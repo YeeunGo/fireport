@@ -20,16 +20,16 @@ public class StockMarketInfo {
 
     private LocalDate basDt; // 기준일자
 
-    @Column(length = 9)
+    @Column(length = 6)
     private String srtnCd; // 단축코드 (6자리 종목 코드)
 
     @Column(length = 12)
     private String isinCd; // ISIN 코드
 
-    @Column(length = 120)
+    @Column(length = 200)
     private String itmsNm; // 종목명
 
-    @Column(length = 40)
+    @Column(length = 10)
     private String mrktCtg; // 시장 구분 (KOSPI/KOSDAQ/KONEX)
 
     private Integer clpr; // 종가
