@@ -15,12 +15,11 @@ public class QueryStringConverterTest {
     void convertDtoToParam_basic() {
         // given
         TestRequestDto dto = new TestRequestDto("예은", 1);
-        String encodedName = URLEncoder.encode(dto.getName(), StandardCharsets.UTF_8);
-
+        String encoded = URLEncoder.encode(dto.getName(), StandardCharsets.UTF_8);
         // when
         String result = QueryStringConverter.convertDtoToParam(dto);
 
         // then
-        assertThat(result).isEqualTo("?name="+encodedName+"&page=1");
+        assertThat(result).isEqualTo("?name="+encoded+"&page=1");
     }
 }

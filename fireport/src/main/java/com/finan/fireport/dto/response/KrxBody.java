@@ -7,9 +7,9 @@ public class KrxBody<T> {
     protected final Integer numOfRows;
     protected final Integer pageNo;
     protected final Integer totalCount;
-    protected final T items;
+    protected final KrxResponseDto<T> items;
 
-    public KrxBody(Integer numOfRows, Integer pageNo, Integer totalCount, T items) {
+    public KrxBody(Integer numOfRows, Integer pageNo, Integer totalCount, KrxResponseDto<T> items) {
         this.numOfRows = numOfRows;
         this.pageNo = pageNo;
         this.totalCount = totalCount;

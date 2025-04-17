@@ -1,12 +1,12 @@
 package com.finan.fireport.dto.request;
 
-import com.finan.fireport.dto.request.BaseRequestDto;
+import com.finan.fireport.dto.request.KrxBaseRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 
 /* 상장종목정보 requestDto */
 @Getter
-public class StockCorporationInfoRequestDto extends BaseRequestDto {
+public class StockCorporationInfoRequestDto extends KrxBaseRequestDto {
     private final String basDt;
     private final String beginBasDt;
     private final String endBasDt;

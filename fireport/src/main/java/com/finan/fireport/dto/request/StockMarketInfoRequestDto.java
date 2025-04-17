@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /*주식시세 requestDto*/
 @Getter
-public class StockMarketInfoRequestDto extends BaseRequestDto {
+public class StockMarketInfoRequestDto extends KrxBaseRequestDto {
 
     private final String basDt;
     private final String beginBasDt;

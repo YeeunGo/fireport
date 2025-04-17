@@ -26,8 +26,13 @@ public abstract class AbstractApiClient {
     private final WebClient webClient;
     private final Bucket bucket;
 
-    @Value("${open-api.base-url}")
     private String OPEN_API_BASE_URL;
+
+    @Value("${open-api.data-base-url}")
+    private String OPEN_API_DATA_BASE_URL;
+
+    @Value("${open-api.dart-base-url}")
+    private String OPEN_API_DART_BASE_URL;
 
     public AbstractApiClient() {
         HttpClient httpClient = HttpClient.create()

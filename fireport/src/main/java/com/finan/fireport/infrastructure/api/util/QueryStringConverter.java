@@ -18,7 +18,7 @@ public class QueryStringConverter {
             }
         });
 
-        return builder.encode().toUriString();
+        return builder.toUriString();
 
     }
 }

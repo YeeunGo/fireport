@@ -6,7 +6,7 @@ import lombok.Getter;
 /*요약재무제표 requestDto*/
 
 @Getter
-public class FinancialSummaryRequestDto extends BaseRequestDto {
+public class FinancialSummaryRequestDto extends KrxBaseRequestDto {
     private String crno;           // 법인등록번호
     private String bizYear;        // 사업연도
 
