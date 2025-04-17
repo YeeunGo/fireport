@@ -1,12 +1,11 @@
 package com.finan.fireport.dto.request;
 
-import com.finan.fireport.dto.request.KrxBaseRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 
 /* 상장종목정보 requestDto */
 @Getter
-public class StockCorporationInfoRequestDto extends KrxBaseRequestDto {
+public class StockItemInfoRequestDto extends KrxBaseRequestDto {
     private final String basDt;
     private final String beginBasDt;
     private final String endBasDt;
@@ -21,7 +20,7 @@ public class StockCorporationInfoRequestDto extends KrxBaseRequestDto {
     private final String likeCorpNm;
 
     @Builder
-    public StockCorporationInfoRequestDto(
+    public StockItemInfoRequestDto(
             Integer numOfRows,
             Integer pageNo,
             String serviceKey,

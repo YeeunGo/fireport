@@ -23,7 +23,7 @@ public class StockVolumeSpike {
     // 종목 참조 (FK)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id", nullable = false)
-    private StockCorporationInfo stock;
+    private StockItemInfo stock;
 
     private LocalDate baseDate; // 기준일자 (오늘 거래량 기준)
 

@@ -22,7 +22,7 @@ public class StockIndicator {
     // 종목 기준 (FK)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id", nullable = false)
-    private StockCorporationInfo stock; // 종목 정보 참조 (isinCd, srtnCd 등)
+    private StockItemInfo stock; // 종목 정보 참조 (isinCd, srtnCd 등)
 
     private LocalDate baseDate; // 기준일자
 
