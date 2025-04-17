@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 public class FinancialSummaryScheduler {
     private final FinancialSummaryService service;
 
-    @Scheduled(cron = "0 0 1 * * *")
-    public void collectFinancialData() {
-        service.fetchAndSaveFinanSumarry();
-    }
+//    @Scheduled(cron = "0 0 1 * * *")
+//    public void collectFinancialData() {
+//        service.fetchAndSaveFinanSumarry();
+//    }
 
 }
