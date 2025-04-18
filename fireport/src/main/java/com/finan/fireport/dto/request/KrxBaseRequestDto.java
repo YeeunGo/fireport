@@ -1,8 +1,11 @@
 package com.finan.fireport.dto.request;
 
+import lombok.NonNull;
+
 public abstract class KrxBaseRequestDto {
     private final Integer numOfRows;
     private final Integer pageNo;
+    @NonNull
     private final String serviceKey;
     private final String resultType = "json";
 
