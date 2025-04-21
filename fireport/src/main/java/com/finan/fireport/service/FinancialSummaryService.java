@@ -17,7 +17,7 @@ public class FinancialSummaryService {
     private final FinanSummaryApiClient apiClient;
     private final FinancialSummaryRepository repository;
 
-    @Value("${open-api.service-key.financialSummary}")
+    @Value("${open-api.service-key.financial-summary}")
     private String serviceKey;
 
     @Transactional

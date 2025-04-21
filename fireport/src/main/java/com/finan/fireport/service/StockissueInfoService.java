@@ -1,5 +1,6 @@
 package com.finan.fireport.service;
 
+import com.finan.fireport.domain.StockIssueInfo;
 import com.finan.fireport.dto.request.FinancialSummaryRequestDto;
 import com.finan.fireport.dto.request.StockIssueInfoRequestDto;
 import com.finan.fireport.dto.response.FinancialSummaryResponseDto;
@@ -7,6 +8,7 @@ import com.finan.fireport.dto.response.KrxBaseResponseDto;
 import com.finan.fireport.dto.response.StockIssueInfoResponseDto;
 import com.finan.fireport.infrastructure.api.FinanSummaryApiClient;
 import com.finan.fireport.infrastructure.api.StockissueInfoApiClient;
+import com.finan.fireport.mapper.StockIssueInfoMapper;
 import com.finan.fireport.repository.FinancialSummaryRepository;
 import com.finan.fireport.repository.StockissueInfoRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +24,9 @@ import java.util.List;
 public class StockissueInfoService {
     private final StockissueInfoApiClient apiClient;
     private final StockissueInfoRepository repository;
+    private final StockIssueInfoMapper mapper;
 
-    @Value("${temp-stock-issue-key}")
+    @Value("${open-api.service-key.stock-issue-key}")
     private String serviceKey;
 
     @Transactional
@@ -39,11 +42,11 @@ public class StockissueInfoService {
                 .basDt(yesterday)
                 .build();
 
-
-
         KrxBaseResponseDto<StockIssueInfoResponseDto> response = apiClient.fetchStockIssueInfos(dto);
+        List<StockIssueInfoResponseDto> list = response.getResponse().getBody().getItems().getItem();
 
-        List<StockIssueInfoResponseDto> list = (List<StockIssueInfoResponseDto>) response.getResponse().getBody().getItems();
+        List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(list);
+        repository.saveAll(StockIssueInfos);
 
     }
 }

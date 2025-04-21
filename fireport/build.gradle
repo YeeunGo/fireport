@@ -48,6 +48,9 @@ dependencies {
 
 	implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.1.0'
 
+	/*MapStruct*/
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 }
 
 tasks.named('test') {

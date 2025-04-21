@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class FinancialSummaryScheduler {
-    private final FinancialSummaryService service;
+//    private final FinancialSummaryService service;
 
 //    @Scheduled(cron = "0 0 1 * * *")
 //    public void collectFinancialData() {

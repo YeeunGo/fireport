@@ -31,9 +31,6 @@ public abstract class AbstractApiClient {
     @Value("${open-api.data-base-url}")
     private String OPEN_API_DATA_BASE_URL;
 
-    @Value("${open-api.dart-base-url}")
-    private String OPEN_API_DART_BASE_URL;
-
     public AbstractApiClient() {
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofSeconds(10));
