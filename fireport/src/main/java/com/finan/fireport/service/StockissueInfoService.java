@@ -1,5 +1,6 @@
 package com.finan.fireport.service;
 
+import com.finan.fireport.common.util.DateFormats;
 import com.finan.fireport.domain.StockIssueInfo;
 import com.finan.fireport.dto.request.FinancialSummaryRequestDto;
 import com.finan.fireport.dto.request.StockIssueInfoRequestDto;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -35,11 +37,13 @@ public class StockissueInfoService {
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(1);
 
+        String yesterdayStr = yesterday.format(DateFormats.YYYYMMDD);
+
         StockIssueInfoRequestDto dto = StockIssueInfoRequestDto.builder()
                 .serviceKey(serviceKey)
                 .pageNo(1000)
                 .numOfRows(1)
-                .basDt(yesterday)
+                .basDt(yesterdayStr)
                 .build();
 
         KrxBaseResponseDto<StockIssueInfoResponseDto> response = apiClient.fetchStockIssueInfos(dto);

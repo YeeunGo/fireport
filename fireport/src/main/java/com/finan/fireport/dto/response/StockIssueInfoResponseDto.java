@@ -3,6 +3,8 @@ package com.finan.fireport.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 /*주식발행내역조회 responseDto*/
 @Getter
 public class StockIssueInfoResponseDto {

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 public class StockIssueInfoRequestDto extends KrxBaseRequestDto {
 
-    private final LocalDate basDt;              // 기준일자
+    private final String basDt;              // 기준일자
     private final String crno;               // 법인등록번호
     private final String stckIssuCmpyNm;     // 주식발행회사명
 
@@ -19,7 +19,7 @@ public class StockIssueInfoRequestDto extends KrxBaseRequestDto {
             @NonNull Integer numOfRows,
             @NonNull Integer pageNo,
             @NonNull String serviceKey,
-            @NonNull LocalDate basDt,
+            @NonNull String basDt,
             String crno,
             String stckIssuCmpyNm
     ) {
