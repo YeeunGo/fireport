@@ -12,7 +12,7 @@ public class FinancialSummaryRequestDto extends KrxBaseRequestDto {
 
     @Builder
     public FinancialSummaryRequestDto(String bizYear, String crno, Integer numOfRows, Integer pageNo, String serviceKey) {
-        super(numOfRows, pageNo, serviceKey);
+        super(numOfRows, pageNo);
         this.crno = crno;
         this.bizYear = bizYear;
     }

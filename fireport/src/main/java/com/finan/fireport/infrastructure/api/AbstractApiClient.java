@@ -32,6 +32,7 @@ public abstract class AbstractApiClient {
     private String OPEN_API_DATA_BASE_URL;
 
     public AbstractApiClient() {
+
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofSeconds(10));
 
@@ -44,7 +45,8 @@ public abstract class AbstractApiClient {
                 .build();
     }
 
-    protected ResponseSpec createGetRequest(String path, String param) {
+  protected ResponseSpec createGetRequest(String path, String query, String key) {
+
 
         ConsumptionProbe probe = bucket.tryConsumeAndReturnRemaining(1);
 
@@ -55,9 +57,12 @@ public abstract class AbstractApiClient {
         if (StringUtil.isNullOrEmpty(path)) {
             throw new BadRequestException(ErrorCode.BAD_REQUEST, PATH_REQUIRED_MESSAGE);
         }
+
+      log.info("최종 호출 URI: {}", OPEN_API_DATA_BASE_URL + path + query + "&serviceKey=" + key);
+
         return webClient
                 .get()
-                .uri(OPEN_API_BASE_URL + path +param)
+                .uri(OPEN_API_DATA_BASE_URL + path + query +"&serviceKey="+key)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response -> {
                     throw new BadRequestException(ErrorCode.BAD_REQUEST, CLIENT_ERROR_MESSAGE);

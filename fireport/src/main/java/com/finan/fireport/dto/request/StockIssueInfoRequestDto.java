@@ -18,12 +18,11 @@ public class StockIssueInfoRequestDto extends KrxBaseRequestDto {
     public StockIssueInfoRequestDto(
             @NonNull Integer numOfRows,
             @NonNull Integer pageNo,
-            @NonNull String serviceKey,
             @NonNull String basDt,
             String crno,
             String stckIssuCmpyNm
     ) {
-        super(numOfRows, pageNo, serviceKey);
+        super(numOfRows, pageNo);
         this.basDt = basDt;
         this.crno = crno;
         this.stckIssuCmpyNm = stckIssuCmpyNm;

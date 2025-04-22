@@ -34,7 +34,6 @@ public class StockMarketInfoRequestDto extends KrxBaseRequestDto {
     public StockMarketInfoRequestDto(
             Integer numOfRows,
             Integer pageNo,
-            String serviceKey,
             String basDt,
             String beginBasDt,
             String endBasDt,
@@ -58,7 +57,7 @@ public class StockMarketInfoRequestDto extends KrxBaseRequestDto {
             String beginMrktTotAmt,
             String endMrktTotAmt
     ) {
-        super(numOfRows, pageNo, serviceKey);
+        super(numOfRows, pageNo);
         this.basDt = basDt;
         this.beginBasDt = beginBasDt;
         this.endBasDt = endBasDt;

@@ -23,7 +23,6 @@ public class StockItemInfoRequestDto extends KrxBaseRequestDto {
     public StockItemInfoRequestDto(
             Integer numOfRows,
             Integer pageNo,
-            String serviceKey,
             String basDt,
             String beginBasDt,
             String endBasDt,
@@ -37,7 +36,7 @@ public class StockItemInfoRequestDto extends KrxBaseRequestDto {
             String corpNm,
             String likeCorpNm
     ) {
-        super(numOfRows, pageNo, serviceKey);
+        super(numOfRows, pageNo);
         this.basDt = basDt;
         this.beginBasDt = beginBasDt;
         this.endBasDt = endBasDt;

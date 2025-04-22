@@ -28,9 +28,6 @@ public class StockissueInfoService {
     private final StockissueInfoRepository repository;
     private final StockIssueInfoMapper mapper;
 
-    @Value("${open-api.service-key.stock-issue-key}")
-    private String serviceKey;
-
     @Transactional
     public void fetchAndSaveStockIssueInfos (){
 
@@ -40,7 +37,6 @@ public class StockissueInfoService {
         String yesterdayStr = yesterday.format(DateFormats.YYYYMMDD);
 
         StockIssueInfoRequestDto dto = StockIssueInfoRequestDto.builder()
-                .serviceKey(serviceKey)
                 .pageNo(1000)
                 .numOfRows(1)
                 .basDt(yesterdayStr)

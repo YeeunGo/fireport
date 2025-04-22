@@ -19,9 +19,6 @@ public class StockItemInfoService {
     private final StockItemInfoApiclient apiClient;
     private final StockItemInfoRepository repository;
 
-    @Value("${open-api.service-key.stock-corporation-info}")
-    private String serviceKey;
-
     @Transactional
     public void fetchAndSaveStockItemInfo (){
 //        StockItemInfoRequestDto dto = StockItemInfoRequestDto.builder()

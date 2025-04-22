@@ -17,9 +17,6 @@ public class FinancialSummaryService {
     private final FinanSummaryApiClient apiClient;
     private final FinancialSummaryRepository repository;
 
-    @Value("${open-api.service-key.financial-summary}")
-    private String serviceKey;
-
     @Transactional
     public void fetchAndSaveFinanSumarry (){
         FinancialSummaryRequestDto dto = FinancialSummaryRequestDto.builder()
@@ -27,7 +24,6 @@ public class FinancialSummaryService {
                 .bizYear("2023")
                 .numOfRows(100)
                 .pageNo(1)
-                .serviceKey(serviceKey)
                 .build();
 
         List<FinancialSummaryResponseDto> financialSummaryResponseDtos = apiClient.fetchFinancialSummaries(dto);

@@ -13,7 +13,7 @@ public class StockItemInfoApiclient extends AbstractApiClient{
 
     public KrxBaseResponseDto<StockItemResponseDto> fetchStockItemInfos (FinancialSummaryRequestDto dto) {
         String queryString = QueryStringConverter.convertDtoToParam(dto);
-        return createGetRequest(FI_SUMMARY_PATH, queryString)
+        return createGetRequest(FI_SUMMARY_PATH, queryString, "stock-item-info")
                 .bodyToMono(new ParameterizedTypeReference<KrxBaseResponseDto<StockItemResponseDto>>() {})
                 .block();
     }

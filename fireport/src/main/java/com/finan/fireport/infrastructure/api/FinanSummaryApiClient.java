@@ -14,7 +14,7 @@ public class FinanSummaryApiClient extends AbstractApiClient{
     public List<FinancialSummaryResponseDto> fetchFinancialSummaries (FinancialSummaryRequestDto dto) {
         String queryString = QueryStringConverter.convertDtoToParam(dto);
 
-        return createGetRequest(FI_SUMMARY_PATH, queryString)
+        return createGetRequest(FI_SUMMARY_PATH, queryString, "financial-summary")
                 .bodyToFlux(FinancialSummaryResponseDto.class)
                 .collectList()
                 .block();
