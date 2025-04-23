@@ -37,8 +37,8 @@ public class StockissueInfoService {
         String yesterdayStr = yesterday.format(DateFormats.YYYYMMDD);
 
         StockIssueInfoRequestDto dto = StockIssueInfoRequestDto.builder()
-                .pageNo(1000)
-                .numOfRows(1)
+                .pageNo(1)
+                .numOfRows(1000)
                 .basDt(yesterdayStr)
                 .build();
 
