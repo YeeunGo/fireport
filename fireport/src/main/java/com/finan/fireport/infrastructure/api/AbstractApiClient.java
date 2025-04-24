@@ -14,6 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import reactor.netty.http.client.HttpClient;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 
+import java.net.URI;
 import java.time.Duration;
 
 @Slf4j
@@ -62,7 +63,7 @@ public abstract class AbstractApiClient {
 
         return webClient
                 .get()
-                .uri(OPEN_API_DATA_BASE_URL + path + query +"&serviceKey="+key)
+                .uri(URI.create(OPEN_API_DATA_BASE_URL + path + query +"&serviceKey="+key))
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, response -> {
                     throw new BadRequestException(ErrorCode.BAD_REQUEST, CLIENT_ERROR_MESSAGE);

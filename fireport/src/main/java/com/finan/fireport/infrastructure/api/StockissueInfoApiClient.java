@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StockissueInfoApiClient extends AbstractApiClient {
-    private static final String STOCK_ISSUE_PATH = "/GetStocIssuInfoService_V2/getStocIssuSat_V2";
+    private static final String STOCK_ISSUE_PATH = "/GetStocIssuInfoService_V2/getStocIssuStat_V2";
 
     @Value("${open-api.service-keys.stock-issue}")
     private String STOCK_ISSUE_KEY;

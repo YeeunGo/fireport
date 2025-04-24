@@ -13,6 +13,7 @@ import com.finan.fireport.mapper.StockIssueInfoMapper;
 import com.finan.fireport.repository.FinancialSummaryRepository;
 import com.finan.fireport.repository.StockissueInfoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StockissueInfoService {
@@ -43,6 +45,7 @@ public class StockissueInfoService {
                 .build();
 
         KrxBaseResponseDto<StockIssueInfoResponseDto> response = apiClient.fetchStockIssueInfos(dto);
+        log.info("response 가져온거 {}",response.getResponse().getBody().getItems().getItem());
         List<StockIssueInfoResponseDto> list = response.getResponse().getBody().getItems().getItem();
 
         List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(list);

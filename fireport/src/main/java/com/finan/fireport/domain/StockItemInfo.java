@@ -16,7 +16,7 @@ public class StockItemInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate basDt; // 기준일자 (yyyyMMdd → LocalDate)
+    private LocalDate basDt; // 기준일자
 
     @Column(length = 9)
     private String srtnCd; // 단축코드
