@@ -45,7 +45,6 @@ public class StockissueInfoService {
                 .build();
 
         KrxBaseResponseDto<StockIssueInfoResponseDto> response = apiClient.fetchStockIssueInfos(dto);
-        log.info("response 가져온거 {}",response.getResponse().getBody().getItems().getItem());
         List<StockIssueInfoResponseDto> list = response.getResponse().getBody().getItems().getItem();
 
         List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(list);

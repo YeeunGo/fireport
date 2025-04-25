@@ -11,6 +11,9 @@ public class DateMapper {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     public LocalDate stringToLocalDate(String date) {
+        if (date == null || date.trim().isEmpty()) {
+            return null;
+        }
         return LocalDate.parse(date, FORMATTER);
     }
 
