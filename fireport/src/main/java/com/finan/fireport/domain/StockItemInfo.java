@@ -3,13 +3,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-/* 공공 데이터 API - 상장종목정보 Entity*/
+/*상장종목정보 Entity*/
 @Entity
-@Table(name = "stock_corporation_info")
+@Table(name = "stock_item_info")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockItemInfo {
 
     @Id
@@ -35,4 +33,16 @@ public class StockItemInfo {
 
     @Column(length = 240)
     private String corpNm; // 법인명
+
+    @Builder
+    public StockItemInfo(Long id, LocalDate basDt, String srtnCd, String isinCd, String mrktCtg, String itmsNm, String crno, String corpNm) {
+        this.id = id;
+        this.basDt = basDt;
+        this.srtnCd = srtnCd;
+        this.isinCd = isinCd;
+        this.mrktCtg = mrktCtg;
+        this.itmsNm = itmsNm;
+        this.crno = crno;
+        this.corpNm = corpNm;
+    }
 }

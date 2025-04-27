@@ -11,9 +11,7 @@ import java.time.LocalDate;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"stock_id", "baseDate", "period"})})
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockVolumeSpike {
 
     @Id
@@ -34,4 +32,15 @@ public class StockVolumeSpike {
     private Long averageVolume; // 최근 N일 평균 거래량
 
     private BigDecimal spikeRate; // 급등률 (%) = today / avg * 100
+
+    @Builder
+    public StockVolumeSpike(Long id, StockItemInfo stock, LocalDate baseDate, Integer period, Long todayVolume, Long averageVolume, BigDecimal spikeRate) {
+        this.id = id;
+        this.stock = stock;
+        this.baseDate = baseDate;
+        this.period = period;
+        this.todayVolume = todayVolume;
+        this.averageVolume = averageVolume;
+        this.spikeRate = spikeRate;
+    }
 }

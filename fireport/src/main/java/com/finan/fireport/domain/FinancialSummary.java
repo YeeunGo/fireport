@@ -10,9 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "financial_summary")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FinancialSummary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +49,24 @@ public class FinancialSummary {
     private BigDecimal enpCptlAmt; // 자본금액
 
     private BigDecimal fnclDebtRto; // 부채비율
+
+    @Builder
+    public FinancialSummary(Long id, LocalDate basDt, String crno, String curCd, int bizYear, String fnclDcd, String fnclDcdNm, BigDecimal enpSaleAmt, BigDecimal enpBzopPft, BigDecimal iclsPalClcAmt, BigDecimal enpCrtmNpf, BigDecimal enpTastAmt, BigDecimal enpTdbtAmt, BigDecimal enpTcptAmt, BigDecimal enpCptlAmt, BigDecimal fnclDebtRto) {
+        this.id = id;
+        this.basDt = basDt;
+        this.crno = crno;
+        this.curCd = curCd;
+        this.bizYear = bizYear;
+        this.fnclDcd = fnclDcd;
+        this.fnclDcdNm = fnclDcdNm;
+        this.enpSaleAmt = enpSaleAmt;
+        this.enpBzopPft = enpBzopPft;
+        this.iclsPalClcAmt = iclsPalClcAmt;
+        this.enpCrtmNpf = enpCrtmNpf;
+        this.enpTastAmt = enpTastAmt;
+        this.enpTdbtAmt = enpTdbtAmt;
+        this.enpTcptAmt = enpTcptAmt;
+        this.enpCptlAmt = enpCptlAmt;
+        this.fnclDebtRto = fnclDebtRto;
+    }
 }

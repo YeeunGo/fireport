@@ -9,10 +9,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "stock_indicator")
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockIndicator {
 
     @Id
@@ -31,4 +29,16 @@ public class StockIndicator {
     private BigDecimal roe;      // ROE = 순이익 / 자본
     private BigDecimal roa;      // ROA = 순이익 / 자산
     private BigDecimal debtRatio; // 부채비율 = 부채 / 자본
+
+    @Builder
+    public StockIndicator(Long id, StockItemInfo stock, LocalDate baseDate, BigDecimal per, BigDecimal pbr, BigDecimal roe, BigDecimal roa, BigDecimal debtRatio) {
+        this.id = id;
+        this.stock = stock;
+        this.baseDate = baseDate;
+        this.per = per;
+        this.pbr = pbr;
+        this.roe = roe;
+        this.roa = roa;
+        this.debtRatio = debtRatio;
+    }
 }

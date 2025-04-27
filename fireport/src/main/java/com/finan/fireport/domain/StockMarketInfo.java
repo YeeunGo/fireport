@@ -9,9 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "stock_market_info")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockMarketInfo {
 
     @Id
@@ -51,4 +49,24 @@ public class StockMarketInfo {
     private Long lstgStCnt; // 상장주식수
 
     private Long mrktTotAmt; // 시가총액
+
+    @Builder
+    public StockMarketInfo(Long id, LocalDate basDt, String srtnCd, String isinCd, String itmsNm, String mrktCtg, Integer clpr, Integer vs, BigDecimal fltRt, Integer mkp, Integer hipr, Integer lopr, Long trqu, Long trPrc, Long lstgStCnt, Long mrktTotAmt) {
+        this.id = id;
+        this.basDt = basDt;
+        this.srtnCd = srtnCd;
+        this.isinCd = isinCd;
+        this.itmsNm = itmsNm;
+        this.mrktCtg = mrktCtg;
+        this.clpr = clpr;
+        this.vs = vs;
+        this.fltRt = fltRt;
+        this.mkp = mkp;
+        this.hipr = hipr;
+        this.lopr = lopr;
+        this.trqu = trqu;
+        this.trPrc = trPrc;
+        this.lstgStCnt = lstgStCnt;
+        this.mrktTotAmt = mrktTotAmt;
+    }
 }

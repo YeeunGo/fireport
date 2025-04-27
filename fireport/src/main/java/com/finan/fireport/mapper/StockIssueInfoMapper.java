@@ -1,7 +1,7 @@
 package com.finan.fireport.mapper;
 
 import com.finan.fireport.domain.StockIssueInfo;
-import com.finan.fireport.dto.response.StockIssueInfoResponseDto;
+import com.finan.fireport.dto.response.StockIssueInfoResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public interface  StockIssueInfoMapper {
 
     @Mapping(target = "id", ignore = true)
-    StockIssueInfo toEntity(StockIssueInfoResponseDto dto);
+    StockIssueInfo toEntity(StockIssueInfoResponse dto);
 
-    StockIssueInfoResponseDto toDto(StockIssueInfo entity);
+    StockIssueInfoResponse toDto(StockIssueInfo entity);
 
-    List<StockIssueInfo> toEntityList(List<StockIssueInfoResponseDto> dtoList);
+    List<StockIssueInfo> toEntityList(List<StockIssueInfoResponse> dtoList);
 }

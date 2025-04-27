@@ -1,32 +1,45 @@
 package com.finan.fireport.service;
 
-import com.finan.fireport.dto.request.FinancialSummaryRequestDto;
-import com.finan.fireport.dto.response.FinancialSummaryResponseDto;
-import com.finan.fireport.infrastructure.api.FinanSummaryApiClient;
+import com.finan.fireport.common.util.DateFormats;
+import com.finan.fireport.domain.FinancialSummary;
+import com.finan.fireport.dto.request.FinancialSummaryRequest;
+import com.finan.fireport.dto.response.FinancialSummaryResponse;
+import com.finan.fireport.dto.response.KrxBaseResponseDto;
+import com.finan.fireport.infrastructure.api.FinancialSummaryApiClient;
+import com.finan.fireport.mapper.FinancialSummaryMapper;
 import com.finan.fireport.repository.FinancialSummaryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FinancialSummaryService {
-    private final FinanSummaryApiClient apiClient;
+    private final FinancialSummaryApiClient apiClient;
     private final FinancialSummaryRepository repository;
+    private final FinancialSummaryMapper mapper;
 
     @Transactional
-    public void fetchAndSaveFinanSumarry (){
-        FinancialSummaryRequestDto dto = FinancialSummaryRequestDto.builder()
-                .crno("1234567890")
-                .bizYear("2023")
-                .numOfRows(100)
+    public void fetchAndSaveFinancialSummaries (){
+
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(1);
+
+        FinancialSummaryRequest dto = FinancialSummaryRequest.builder()
                 .pageNo(1)
+                .numOfRows(1000)
                 .build();
 
-        List<FinancialSummaryResponseDto> financialSummaryResponseDtos = apiClient.fetchFinancialSummaries(dto);
+        KrxBaseResponseDto<FinancialSummaryResponse> response = apiClient.fetchFinancialSummaries(dto);
+        List<FinancialSummaryResponse> list = response.getResponse().getBody().getItems().getItem();
+
+        List<FinancialSummary> FinancialSummaries = mapper.toEntityList(list);
+        repository.saveAll(FinancialSummaries);
 
     }
 }
