@@ -27,9 +27,6 @@ public class FinancialSummaryService {
     @Transactional
     public void fetchAndSaveFinancialSummaries (){
 
-        LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minusDays(1);
-
         FinancialSummaryRequest dto = FinancialSummaryRequest.builder()
                 .pageNo(1)
                 .numOfRows(1000)

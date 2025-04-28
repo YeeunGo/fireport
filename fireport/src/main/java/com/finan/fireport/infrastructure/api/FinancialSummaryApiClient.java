@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FinancialSummaryApiClient extends AbstractApiClient {
-    private static final String STOCK_ISSUE_PATH = "/GetFinaStatInfoService_V2/getSummFin";
+    private static final String STOCK_ISSUE_PATH = "/GetFinaStatInfoService_V2/getSummFinaStat_V2";
 
     @Value("${open-api.service-keys.financial-summary}")
     private String FINAN_SUMMARY_KEY;
