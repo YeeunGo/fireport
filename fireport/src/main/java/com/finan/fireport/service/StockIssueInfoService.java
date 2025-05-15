@@ -7,6 +7,7 @@ import com.finan.fireport.dto.response.KrxBaseResponseDto;
 import com.finan.fireport.dto.response.StockIssueInfoResponse;
 import com.finan.fireport.infrastructure.api.StockIssueInfoApiClient;
 import com.finan.fireport.mapper.StockIssueInfoMapper;
+import com.finan.fireport.repository.StockIssueInfoJdbcRepository;
 import com.finan.fireport.repository.StockIssueInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,28 +22,44 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StockIssueInfoService {
     private final StockIssueInfoApiClient apiClient;
-    private final StockIssueInfoRepository repository;
+    //private final StockIssueInfoRepository repository;
+    private final StockIssueInfoJdbcRepository jdbcRepository;
     private final StockIssueInfoMapper mapper;
+    private static final Integer NUM_OF_ROWS = 100;
 
     @Transactional
-    public void fetchAndSaveStockIssueInfos (){
+        public void fetchAndSaveStockIssueInfos (LocalDate baseDay){
+        int pageNo = 1;
 
-        LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minusDays(1);
+        //LocalDate yesterday = LocalDate.now().minusDays(1); --
 
-        String yesterdayStr = yesterday.format(DateFormats.YYYYMMDD);
-
-        StockIssueInfoRequest dto = StockIssueInfoRequest.builder()
-                .pageNo(1)
-                .numOfRows(1000)
-                .basDt(yesterdayStr)
+        StockIssueInfoRequest requestDto = StockIssueInfoRequest.builder()
+                .pageNo(pageNo)
+                .numOfRows(NUM_OF_ROWS)
+                .basDt(baseDay.format(DateFormats.YYYYMMDD))
                 .build();
 
-        KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(dto);
-        List<StockIssueInfoResponse> list = response.getResponse().getBody().getItems().getItem();
+        while(true){
+            KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
+            List<StockIssueInfoResponse> items = response.getItems();
 
-        List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(list);
-        repository.saveAll(StockIssueInfos);
+            if (items.isEmpty()) {
+                log.info("모든 정보를 조회해서 while문을 종료합니다.");
+                break;
+            }
+
+            List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(items);
+
+            jdbcRepository.bulkInsert(StockIssueInfos);
+
+            requestDto = StockIssueInfoRequest.builder()
+                    .pageNo(++pageNo)
+                    .numOfRows(NUM_OF_ROWS)
+                    .basDt(baseDay.format(DateFormats.YYYYMMDD))
+                    .build();
+        }
+
+
 
     }
 }

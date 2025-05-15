@@ -12,12 +12,11 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockIssueInfo {
+    //여기에 Id 추가
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    StockIssueInfoId id;
 
-    private String crno;                 // 법인등록번호
     private String isinCd;               // ISIN 코드
     private String itmsShrtnCd;          // 종목단축코드
     private String stckIssuCmpyNm;       // 주식발행회사명
@@ -31,12 +30,11 @@ public class StockIssueInfo {
     private LocalDate dpsgRegDt;         // 예탁 등록 일자
     private LocalDate dpsgCanDt;         // 예탁 취소 일자
     private String issuFrmtClsfNm;       // 발행 형태 구분명
-    private LocalDate basDt;             // 기준일자
+
 
     @Builder
-    public StockIssueInfo(Long id, String crno, String isinCd, String itmsShrtnCd, String stckIssuCmpyNm, String isinCdNm, String scrsItmsKcd, String scrsItmsKcdNm, Long stckParPrc, Long issuStckCnt, LocalDate lstgDt, LocalDate lstgAbolDt, LocalDate dpsgRegDt, LocalDate dpsgCanDt, String issuFrmtClsfNm, LocalDate basDt) {
+    public StockIssueInfo( StockIssueInfoId id, String isinCd, String itmsShrtnCd, String stckIssuCmpyNm, String isinCdNm, String scrsItmsKcd, String scrsItmsKcdNm, Long stckParPrc, Long issuStckCnt, LocalDate lstgDt, LocalDate lstgAbolDt, LocalDate dpsgRegDt, LocalDate dpsgCanDt, String issuFrmtClsfNm) {
         this.id = id;
-        this.crno = crno;
         this.isinCd = isinCd;
         this.itmsShrtnCd = itmsShrtnCd;
         this.stckIssuCmpyNm = stckIssuCmpyNm;
@@ -50,6 +48,6 @@ public class StockIssueInfo {
         this.dpsgRegDt = dpsgRegDt;
         this.dpsgCanDt = dpsgCanDt;
         this.issuFrmtClsfNm = issuFrmtClsfNm;
-        this.basDt = basDt;
+
     }
 }

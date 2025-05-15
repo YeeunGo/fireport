@@ -1,6 +1,7 @@
 package com.finan.fireport.repository;
 
 import com.finan.fireport.domain.StockIssueInfo;
+import com.finan.fireport.dto.response.KrxBaseResponseDto;
 import com.finan.fireport.dto.response.StockIssueInfoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,27 +19,38 @@ import java.util.List;
 public class StockIssueInfoJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public void bulkInsert(List<StockIssueInfoResponse> StockIssueInfoResponses) {
-        String sql = "INSERT INTO krx_snapshots " +
-                "(stock_code, base_date, isin_code, market_code, stock_name, corporate_number, corporate_name) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void bulkInsert(List<StockIssueInfo> items) {
+
+        String sql = "INSERT INTO stock_issue_info " +
+                "(bas_dt, crno, isin_cd, itms_shrtn_cd, isin_cd_nm, stck_issu_cmpy_nm, " +
+                "scrs_itms_kcd, scrs_itms_kcd_nm, stck_par_prc, issu_stck_cnt, " +
+                "lstg_dt, lstg_abol_dt, dpsg_reg_dt, dpsg_can_dt, issu_frmt_clsf_nm) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                StockIssueInfoResponse dto = StockIssueInfoResponses.get(i);
-                ps.setString(1, dto.getStockCode());
-                ps.setObject(2, dto.getBaseDate()); // LocalDate는 setObject 사용
-                ps.setString(3, dto.getIsinCode());
-                ps.setString(4, dto.getMarketType());
-                ps.setString(5, dto.getStockName());
-                ps.setString(6, dto.getCorporateNumber());
-                ps.setString(7, dto.getCorporateName());
+                StockIssueInfoResponse dto = items.get(i);
+                ps.setString(1, dto.getBasDt());
+                ps.setString(2, dto.getCrno());
+                ps.setString(3, dto.getIsinCd());
+                ps.setString(4, dto.getItmsShrtnCd());
+                ps.setString(5, dto.getIsinCdNm());
+                ps.setString(6, dto.getStckIssuCmpyNm());
+                ps.setString(7, dto.getScrsItmsKcd());
+                ps.setString(8, dto.getScrsItmsKcdNm());
+                ps.setString(9, dto.getStckParPrc());
+                ps.setString(10, dto.getIssuStckCnt());
+                ps.setString(11, dto.getLstgDt());
+                ps.setString(12, dto.getLstgAbolDt());
+                ps.setString(13, dto.getDpsgRegDt());
+                ps.setString(14, dto.getDpsgCanDt());
+                ps.setString(15, dto.getIssuFrmtClsfNm());
             }
 
             @Override
             public int getBatchSize() {
-                return StockIssueInfoResponses.size();
+                return items.size();
             }
         });
     }
