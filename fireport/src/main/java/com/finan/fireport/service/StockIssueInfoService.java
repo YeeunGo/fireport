@@ -40,6 +40,7 @@ public class StockIssueInfoService {
                 .build();
 
         while(true){
+            // open api 자체가 실패했을 때 처리는 아직 구현은 안했는데, OpenDataClient 내에서 처리하는게 좋을 것 같습니다.
             KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
             List<StockIssueInfoResponse> items = response.getItems();
 
@@ -58,8 +59,16 @@ public class StockIssueInfoService {
                     .basDt(baseDay.format(DateFormats.YYYYMMDD))
                     .build();
         }
+    }
 
-
-
+    private int getTotalPages(LocalDate baseDay){
+        StockIssueInfoRequest requestDto = StockIssueInfoRequest.builder()
+                .pageNo(1)
+                .numOfRows(NUM_OF_ROWS)
+                .basDt(baseDay.format(DateFormats.YYYYMMDD))
+                .build();
+        KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
+        int totalItems = response.getResponse().getBody().getTotalCount();
+        return (int) Math.ceil((double) totalItems / NUM_OF_ROWS);
     }
 }
