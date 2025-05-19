@@ -33,7 +33,7 @@ public class FinancialSummaryService {
                 .build();
 
         KrxBaseResponseDto<FinancialSummaryResponse> response = apiClient.fetchFinancialSummaries(dto);
-        List<FinancialSummaryResponse> list = response.getResponse().getBody().getItems().getItem();
+        List<FinancialSummaryResponse> list = response.getResponse().getBody().getItems();
 
         List<FinancialSummary> FinancialSummaries = mapper.toEntityList(list);
         repository.saveAll(FinancialSummaries);

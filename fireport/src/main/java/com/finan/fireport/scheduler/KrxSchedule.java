@@ -14,7 +14,7 @@ public class KrxSchedule {
 
     // 매일 AM 00:20에 실행
     @Scheduled(cron = "0 20 0 * * *")
-    public void run() {
+    public void run() throws InterruptedException {
         LocalDate now = LocalDate.now();
         stockIssueInfoService.fetchAndSaveStockIssueInfos(now);
     }

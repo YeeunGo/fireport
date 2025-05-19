@@ -1,10 +1,12 @@
 package com.finan.fireport.domain;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Getter
 @Embeddable
 public class StockIssueInfoId  implements Serializable {
     private LocalDate basDt;             // 기준일자

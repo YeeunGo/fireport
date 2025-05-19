@@ -30,21 +30,21 @@ public class StockIssueInfoJdbcRepository {
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                StockIssueInfoResponse dto = items.get(i);
-                ps.setString(1, dto.getBasDt());
-                ps.setString(2, dto.getCrno());
+                StockIssueInfo dto = items.get(i);
+                ps.setObject(1, dto.getId().getBasDt());
+                ps.setString(2, dto.getId().getCrno());
                 ps.setString(3, dto.getIsinCd());
                 ps.setString(4, dto.getItmsShrtnCd());
                 ps.setString(5, dto.getIsinCdNm());
                 ps.setString(6, dto.getStckIssuCmpyNm());
                 ps.setString(7, dto.getScrsItmsKcd());
                 ps.setString(8, dto.getScrsItmsKcdNm());
-                ps.setString(9, dto.getStckParPrc());
-                ps.setString(10, dto.getIssuStckCnt());
-                ps.setString(11, dto.getLstgDt());
-                ps.setString(12, dto.getLstgAbolDt());
-                ps.setString(13, dto.getDpsgRegDt());
-                ps.setString(14, dto.getDpsgCanDt());
+                ps.setLong(9, dto.getStckParPrc());
+                ps.setLong(10, dto.getIssuStckCnt());
+                ps.setObject(11, dto.getLstgDt());
+                ps.setObject(12, dto.getLstgAbolDt());
+                ps.setObject(13, dto.getDpsgRegDt());
+                ps.setObject(14, dto.getDpsgCanDt());
                 ps.setString(15, dto.getIssuFrmtClsfNm());
             }
 

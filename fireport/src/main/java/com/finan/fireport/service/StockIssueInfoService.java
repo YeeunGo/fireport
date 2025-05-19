@@ -15,50 +15,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class StockIssueInfoService {
     private final StockIssueInfoApiClient apiClient;
-    //private final StockIssueInfoRepository repository;
     private final StockIssueInfoJdbcRepository jdbcRepository;
     private final StockIssueInfoMapper mapper;
     private static final Integer NUM_OF_ROWS = 100;
+    private static final Integer NUM_THREADS = 4; // 병렬 스레드 수
 
     @Transactional
-        public void fetchAndSaveStockIssueInfos (LocalDate baseDay){
-        int pageNo = 1;
+        public void fetchAndSaveStockIssueInfos (LocalDate baseDay) throws InterruptedException {
+        int totalPages = getTotalPages(baseDay);
 
+        ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);  // 스레드 풀 설정
         //LocalDate yesterday = LocalDate.now().minusDays(1); --
 
-        StockIssueInfoRequest requestDto = StockIssueInfoRequest.builder()
-                .pageNo(pageNo)
-                .numOfRows(NUM_OF_ROWS)
-                .basDt(baseDay.format(DateFormats.YYYYMMDD))
-                .build();
+        List<Callable<Void>> tasks = new ArrayList<>();
 
-        while(true){
-            // open api 자체가 실패했을 때 처리는 아직 구현은 안했는데, OpenDataClient 내에서 처리하는게 좋을 것 같습니다.
-            KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
-            List<StockIssueInfoResponse> items = response.getItems();
+        for(int pageNo = 1; pageNo <= totalPages; pageNo++){
+            final int page = pageNo;
+            tasks.add(()->{
+                StockIssueInfoRequest requestDto = StockIssueInfoRequest.builder()
+                        .pageNo(page)
+                        .numOfRows(NUM_OF_ROWS)
+                        .basDt(baseDay.format(DateFormats.YYYYMMDD))
+                        .build();
 
-            if (items.isEmpty()) {
-                log.info("모든 정보를 조회해서 while문을 종료합니다.");
-                break;
-            }
+                KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
+                List<StockIssueInfoResponse> items = response.getItems();
 
-            List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(items);
-
-            jdbcRepository.bulkInsert(StockIssueInfos);
-
-            requestDto = StockIssueInfoRequest.builder()
-                    .pageNo(++pageNo)
-                    .numOfRows(NUM_OF_ROWS)
-                    .basDt(baseDay.format(DateFormats.YYYYMMDD))
-                    .build();
+                if (!items.isEmpty()) {
+                    List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(items);
+                    jdbcRepository.bulkInsert(StockIssueInfos);
+                    log.info("페이지 번호 {} - 데이터 처리 완료", page);
+                }
+                return null;
+            });
         }
+
+        try{
+            // 병렬처리
+            executorService.invokeAll(tasks);
+        } catch(InterruptedException e){
+            Thread.currentThread().interrupt(); // 스레드 중단
+            log.error("스레드 작업 중 인터럽트 발생", e);
+        } finally{
+            executorService.shutdown(); // 스레드 풀 종료
+        }
+
+
     }
 
     private int getTotalPages(LocalDate baseDay){
