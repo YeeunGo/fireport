@@ -10,11 +10,10 @@ public class KrxBaseResponseDto<T> {
     private KrxBaseResponseItemDto<T> response;
 
     public List<T> getItems() {
-        // NPE 방지
-        if (response == null || response.getBody() == null) {
+        if (response == null || response.getBody() == null || response.getBody().getItems() == null) {
             return Collections.emptyList();
         }
 
-        return response.getBody().getItems();
+        return response.getBody().getItems().getItem();
     }
 }

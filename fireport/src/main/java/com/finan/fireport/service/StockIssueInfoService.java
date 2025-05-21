@@ -33,10 +33,11 @@ public class StockIssueInfoService {
 
     @Transactional
         public void fetchAndSaveStockIssueInfos (LocalDate baseDay) throws InterruptedException {
-        int totalPages = getTotalPages(baseDay);
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minusDays(2);
+        int totalPages = getTotalPages(yesterday);
 
         ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);  // 스레드 풀 설정
-        //LocalDate yesterday = LocalDate.now().minusDays(1); --
 
         List<Callable<Void>> tasks = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class StockIssueInfoService {
 
                 KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
                 List<StockIssueInfoResponse> items = response.getItems();
-
+                log.info("items : {}", items);
                 if (!items.isEmpty()) {
                     List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(items);
                     jdbcRepository.bulkInsert(StockIssueInfos);

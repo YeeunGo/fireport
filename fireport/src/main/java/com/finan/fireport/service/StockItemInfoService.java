@@ -41,7 +41,7 @@ public class StockItemInfoService {
                 .build();
 
         KrxBaseResponseDto<StockItemInfoResponse> response = apiClient.fetchStockItemInfos(dto);
-        List<StockItemInfoResponse> list = response.getResponse().getBody().getItems();
+        List<StockItemInfoResponse> list = response.getItems();
 
         List<StockItemInfo> StockItemInfos = mapper.toEntityList(list);
         repository.saveAll(StockItemInfos);
