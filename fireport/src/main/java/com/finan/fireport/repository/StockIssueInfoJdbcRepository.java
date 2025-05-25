@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +32,8 @@ public class StockIssueInfoJdbcRepository {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 StockIssueInfo dto = items.get(i);
+                log.info("Item 직전!! i: {}", i);
+                log.info("Item 직전!! : {}", dto.getId().getCrno());
                 ps.setObject(1, dto.getId().getBasDt());
                 ps.setString(2, dto.getId().getCrno());
                 ps.setString(3, dto.getIsinCd());
@@ -39,8 +42,8 @@ public class StockIssueInfoJdbcRepository {
                 ps.setString(6, dto.getStckIssuCmpyNm());
                 ps.setString(7, dto.getScrsItmsKcd());
                 ps.setString(8, dto.getScrsItmsKcdNm());
-                ps.setLong(9, dto.getStckParPrc());
-                ps.setLong(10, dto.getIssuStckCnt());
+                ps.setObject(9, dto.getStckParPrc(), Types.BIGINT);
+                ps.setObject(10, dto.getIssuStckCnt(),Types.BIGINT);
                 ps.setObject(11, dto.getLstgDt());
                 ps.setObject(12, dto.getLstgAbolDt());
                 ps.setObject(13, dto.getDpsgRegDt());
