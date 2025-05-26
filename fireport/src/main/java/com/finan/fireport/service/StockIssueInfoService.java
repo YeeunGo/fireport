@@ -31,19 +31,17 @@ public class StockIssueInfoService {
     private static final Integer NUM_OF_ROWS = 100;
     private static final Integer NUM_THREADS = 4; // 병렬 스레드 수
 
-    //yesterday 부분 제대로 변경해두기
     @Transactional
         public void fetchAndSaveStockIssueInfos (LocalDate baseDay) throws InterruptedException {
         LocalDate today = LocalDate.now();
         LocalDate yesterday = today.minusDays(2);
         int totalPages = getTotalPages(yesterday);
-        log.info("totalPages : {}", totalPages);
+
         ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);  // 스레드 풀 설정
 
         List<Callable<Void>> tasks = new ArrayList<>();
 
-        // 여기 로직 이상함 다시 생각해 보기
-        for(int pageNo = 1; pageNo <= 1; pageNo++){
+        for(int pageNo = 1; pageNo <= totalPages; pageNo++){
             final int page = pageNo;
             tasks.add(()->{
                 StockIssueInfoRequest requestDto = StockIssueInfoRequest.builder()
@@ -56,12 +54,11 @@ public class StockIssueInfoService {
                 List<StockIssueInfoResponse> items = response.getItems();
                 log.info("items : {}", items);
                 if (!items.isEmpty()) {
-                    log.info("items??? : {}", items);
                     List<StockIssueInfo> StockIssueInfos = mapper.toEntityList(items);
-                    try {
+                    try{
                         jdbcRepository.bulkInsert(StockIssueInfos);
-                    } catch (Exception e) {
-                        log.error("DB 삽입 실패", e);
+                    }catch (Exception e){
+                        log.info("예외중 에러 발생 : {}", e);
                         throw e;
                     }
 
@@ -90,7 +87,6 @@ public class StockIssueInfoService {
                 .numOfRows(NUM_OF_ROWS)
                 .basDt(baseDay.format(DateFormats.YYYYMMDD))
                 .build();
-
         KrxBaseResponseDto<StockIssueInfoResponse> response = apiClient.fetchStockIssueInfos(requestDto);
         int totalItems = response.getResponse().getBody().getTotalCount();
         return (int) Math.ceil((double) totalItems / NUM_OF_ROWS);
